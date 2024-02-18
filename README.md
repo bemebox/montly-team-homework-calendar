@@ -8,6 +8,10 @@ This program was developed according with Python's good practices and based on [
 1.0.0
 
 
+## Resources
+* [Nager.Date Public Holiday Api](https://date.nager.at/Api)
+
+
 ## Getting Started
 
 These instructions will guide you to copy the project from the repository and run it.
@@ -16,6 +20,7 @@ These instructions will guide you to copy the project from the repository and ru
 
 Things you need to have installed:
 * [Python](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python)
+* [requests](https://requests.readthedocs.io/en/latest/)
 
 ### Local Installation
 
@@ -32,7 +37,7 @@ $python main.py
 ```
 
 ### Test
-Run the program with python main.py.
+Run the program with python main.py and the output must be an excel file like this:
 
 
 ## Authors
