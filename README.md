@@ -21,6 +21,7 @@ These instructions will guide you to copy the project from the repository and ru
 Things you need to have installed:
 * [Python](https://docs.python.org/3/using/unix.html#getting-and-installing-the-latest-version-of-python)
 * [requests](https://requests.readthedocs.io/en/latest/)
+* [openpyxl](https://openpyxl.readthedocs.io/en/stable/)
 
 ### Local Installation
 
