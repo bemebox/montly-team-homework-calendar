@@ -31,14 +31,14 @@ $git clone [URL].git
 ```
 
 ### Run
-To run the project, first check that the library is installed, then run the python command.
+To run the project, first check that the requests and openpyxl libraries are installed, then run the python command.
 ```
 $python main.py
 ```
 
 ### Test
 Run the program with python main.py and the output must be an excel file like this:
-
+![monthly_country_public_holidays_excel_sample image](./documentation/images/monthly_country_public_holidays_excel_sample.png)
 
 ## Authors
 

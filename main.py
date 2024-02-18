@@ -1,6 +1,9 @@
 import requests
-from datetime import datetime
+import calendar
 from collections import namedtuple
+from datetime import datetime
+from openpyxl import Workbook
+from openpyxl.styles import PatternFill
 
 # create constant values
 Constants = namedtuple("Constants", ["public_holidays_base_url", "country_code"])
@@ -15,6 +18,28 @@ def main():
     month_public_holidays_by_month = get_country_public_holidays_by_month(
         constants.country_code, current_date.year, current_date.month
     )
+
+    # create the Excel file
+    excel_file = create_calendar_excel(
+        current_date.year, current_date.month, month_public_holidays_by_month
+    )
+
+    # save the Excel file
+    excel_file.save(f"calendar_{current_date.year}_{current_date.month}.xlsx")
+
+
+def get_current_date():
+    """
+    function that get the current date.
+
+    Returns:
+        datetime.date: the current date.
+    """
+    # get the current date and time
+    current_date_time = datetime.now()
+
+    # return the current date
+    return current_date_time.date()
 
 
 def get_country_public_holidays_by_month(country_code, year, month):
@@ -82,18 +107,55 @@ def get_country_public_holidays_by_year(country_code, year):
         return None
 
 
-def get_current_date():
+def create_calendar_excel(year, month, holidays=[]):
     """
-    function that get the current date.
+    create an Excel workbook with a calendar for a specific year and month.
+
+    Args:
+        year (int): the year for which to create the calendar.
+        month (int): the month for which to create the calendar (1 to 12).
+        holidays (list, optional): list of holiday dates (format: 'YYYY-MM-DD'). Defaults to an empty list.
 
     Returns:
-        datetime.date: the current date.
-    """
-    # get the current date and time
-    current_date_time = datetime.now()
+        openpyxl.workbook.Workbook: the Excel workbook containing the calendar.
 
-    # return the current date
-    return current_date_time.date()
+    Example:
+        create_calendar_excel(2024, 2, ["2024-02-14", "2024-02-21"])
+    """
+    # create a new workbook
+    workbook = Workbook()
+    sheet = workbook.active
+
+    # initialize the workbook sheet rows
+    sheet.cell(row=1, column=1, value="")
+    sheet.cell(row=2, column=1, value="")
+
+    # get the days of the month's calendar
+    month_calendar = calendar.monthcalendar(year, month)
+
+    # populate the Excel sheet with days and mark holidays in gray
+    for week in month_calendar:
+        for day in week:
+            if day != 0:
+
+                # add the day of the week in the first row
+                weekday = calendar.day_abbr[calendar.weekday(year, month, day)]
+                sheet.cell(row=1, column=sheet.max_column + 1, value=weekday)
+
+                # add the day of the month in the second row
+                weekday = calendar.day_abbr[calendar.weekday(year, month, day)]
+                sheet.cell(row=2, column=sheet.max_column, value=day)
+
+                date = f"{year}-{month:02d}-{day:02d}"
+                if date in holidays:
+                    # Fill the cell with gray color for holidays
+                    sheet.cell(row=sheet.max_row, column=sheet.max_column).fill = (
+                        PatternFill(
+                            start_color="808080", end_color="808080", fill_type="solid"
+                        )
+                    )
+
+    return workbook
 
 
 if __name__ == "__main__":
