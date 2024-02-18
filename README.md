@@ -1,4 +1,4 @@
-# montly-team-homework-calendar
+# Montly Team's Homework Calendar
 Python 3-based program to automate a montly team homework calendar creation.\
 Create an excel file with a list of all the team resources and mark the days when the team resource works from home or works in the office.
 
