@@ -1,9 +1,9 @@
-import requests
 import calendar
 from collections import namedtuple
 from datetime import datetime
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill
+from web_client import get_request, ApiError
 
 # create constant values
 Constants = namedtuple("Constants", ["public_holidays_base_url", "country_code"])
@@ -97,13 +97,10 @@ def get_country_public_holidays_by_year(country_code, year):
     """
     endpoint = f"{constants.public_holidays_base_url}/{year}/{country_code}"
 
-    response = requests.get(endpoint)
-
-    if response.status_code == 200:
-        holidays = response.json()
-        return holidays
-    else:
-        print(f"Failed to retrieve holidays. Status Code: {response.status_code}")
+    try:
+        return get_request(endpoint)
+    except ApiError as ex:
+        print(f"API Error: {ex}")
         return None
 
 
